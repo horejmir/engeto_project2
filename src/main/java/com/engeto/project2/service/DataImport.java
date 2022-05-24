@@ -1,11 +1,15 @@
 package com.engeto.project2.service;
 
 import com.engeto.project2.entity.Rates;
-import com.google.gson.Gson;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -30,52 +34,20 @@ public class DataImport {
 
         //System.out.println(json);
 
-        parse(json);
+        try {
+            parse(json);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void parse(String jsonString) {
+    private void parse(String jsonString) throws IOException {
 
-        Gson gson = new Gson();
+        ObjectMapper objectMapper = new ObjectMapper();
+        Reader reader = new StringReader(jsonString);
+        Rates all = objectMapper.readValue(reader, Rates.class);
 
-        //String data = "{\"SE\": {\"country\": \"Sweden\", \"standard_rate\": 25.00, \"reduced_rate\": 12.00, \"reduced_rate_alt\": 6.00, \"super_reduced_rate\": false, \"parking_rate\": false}}";
-
-        //CountryTaxEntity entity = gson.fromJson(data, CountryTaxEntity.class);
-
-        //Type countryTaxType = new TypeToken<HashMap<String, CountryTaxEntity>>(){}.getType();
-
-        //HashMap<String, CountryTaxEntity> map = gson.fromJson(jsonString, countryTaxType);
-
-
-
-        //CountryTaxEntity[] entityArray = gson.fromJson(jsonString, CountryTaxEntity[].class);
-
-        Rates all = gson.fromJson(jsonString, Rates.class);
-
-        System.out.println(all);
+        System.out.println(all.getRateList());
 
         }
-
-
-
-
-            /*
-        String json = null;
-        try {
-            URL url = new URL("https://euvatrates.com/rates.json");
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoOutput(true);
-            connection.setInstanceFollowRedirects(false);
-            connection.setRequestMethod("GET");
-            connection.setRequestProperty("Content-Type", "application/json");
-            connection.setRequestProperty("charset", "utf-8");
-            connection.connect();
-            InputStream inStream = connection.getInputStream();
-            json = new Scanner(inStream, "UTF-8").useDelimiter("\\Z").next();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-
-        System.out.println(json);
-
-         */
 }

@@ -1,30 +1,32 @@
 package com.engeto.project2.entity;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+//@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonDeserialize(using = CountryTaxEntityDeserializer.class)
 public class CountryTaxEntity {
-
 
     private String countryShortcut;
 
-    @SerializedName(value = "country")
+    //@JsonProperty("country")
     private String countryName;
 
-    @SerializedName(value = "standard_rate")
+    //@JsonProperty("standard_rate")
     private Double standardRate;
 
-    @SerializedName(value = "reduced_rate")
-    private String reducedRate;
+    //@JsonProperty("reduced_rate")
+    private Double reducedRate;
 
-    @SerializedName(value = "reduced_rate_alt")
-    private String ReduceRateAlt;
+    //@JsonProperty("reduced_rate_alt")
+    private Double ReduceRateAlt;
 
-    @SerializedName(value = "super_reduced_rate")
-    private String superReduceRate;
+    //@JsonProperty("super_reduced_rate")
+    private Double superReduceRate;
 
-    @SerializedName(value = "parking_rate")
-    private String parkingRate;
-
+    //@JsonProperty("parking_rate")
+    private Double parkingRate;
 
     @Override
     public String toString() {
@@ -63,35 +65,35 @@ public class CountryTaxEntity {
         this.standardRate = standardRate;
     }
 
-    public String getReducedRate() {
+    public Double getReducedRate() {
         return reducedRate;
     }
 
-    public void setReducedRate(String reducedRate) {
+    public void setReducedRate(Double reducedRate) {
         this.reducedRate = reducedRate;
     }
 
-    public String getReduceRateAlt() {
+    public Double getReduceRateAlt() {
         return ReduceRateAlt;
     }
 
-    public void setReduceRateAlt(String reduceRateAlt) {
+    public void setReduceRateAlt(Double reduceRateAlt) {
         ReduceRateAlt = reduceRateAlt;
     }
 
-    public String getSuperReduceRate() {
+    public Double getSuperReduceRate() {
         return superReduceRate;
     }
 
-    public void setSuperReduceRate(String superReduceRate) {
+    public void setSuperReduceRate(Double superReduceRate) {
         this.superReduceRate = superReduceRate;
     }
 
-    public String getParkingRate() {
+    public Double getParkingRate() {
         return parkingRate;
     }
 
-    public void setParkingRate(String parkingRate) {
+    public void setParkingRate(Double parkingRate) {
         this.parkingRate = parkingRate;
     }
 }
