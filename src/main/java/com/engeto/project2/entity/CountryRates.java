@@ -1,37 +1,50 @@
 package com.engeto.project2.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.engeto.project2.dataDownload.CountryRatesDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-//@JsonIgnoreProperties(ignoreUnknown = true)
-@JsonDeserialize(using = CountryTaxEntityDeserializer.class)
-public class CountryTaxEntity {
+import javax.persistence.*;
+import java.util.Objects;
 
-    private String countryShortcut;
+@Entity
+@Table(name = "country_rates")
+@JsonDeserialize(using = CountryRatesDeserializer.class)
+public class CountryRates {
 
-    //@JsonProperty("country")
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @Column
+    private String shortcutISO;
+
+    @Column
+    private String shortcutEU;
+
+    @Column
     private String countryName;
 
-    //@JsonProperty("standard_rate")
+    @Column
     private Double standardRate;
 
-    //@JsonProperty("reduced_rate")
+    @Column
     private Double reducedRate;
 
-    //@JsonProperty("reduced_rate_alt")
+    @Column
     private Double ReduceRateAlt;
 
-    //@JsonProperty("super_reduced_rate")
+    @Column
     private Double superReduceRate;
 
-    //@JsonProperty("parking_rate")
+    @Column
     private Double parkingRate;
 
     @Override
     public String toString() {
-        return "CountryTaxEntity{" +
-                "countryShortcut='" + countryShortcut + '\'' +
+        return "CountryRates{" +
+                "id=" + id +
+                ", shortcutISO='" + shortcutISO + '\'' +
+                ", shortcutEU='" + shortcutEU + '\'' +
                 ", countryName='" + countryName + '\'' +
                 ", standardRate=" + standardRate +
                 ", reducedRate=" + reducedRate +
@@ -41,12 +54,38 @@ public class CountryTaxEntity {
                 '}';
     }
 
-    public String getCountryShortcut() {
-        return countryShortcut;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CountryRates that = (CountryRates) o;
+        return shortcutISO.equals(that.shortcutISO) && shortcutEU.equals(that.shortcutEU) && countryName.equals(that.countryName);
     }
 
-    public void setCountryShortcut(String countryShortcut) {
-        this.countryShortcut = countryShortcut;
+    @Override
+    public int hashCode() {
+        return Objects.hash(countryName);
+    }
+
+
+    public Long getId() { return id; }
+
+    public void setId(Long id) { this.id = id; }
+
+    public String getShortcutISO() {
+        return shortcutISO;
+    }
+
+    public void setShortcutISO(String shortcutISO) {
+        this.shortcutISO = shortcutISO;
+    }
+
+    public String getShortcutEU() {
+        return shortcutEU;
+    }
+
+    public void setShortcutEU(String shortcutEU) {
+        this.shortcutEU = shortcutEU;
     }
 
     public String getCountryName() {
