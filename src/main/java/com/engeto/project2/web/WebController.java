@@ -7,8 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.Comparator;
 import java.util.List;
@@ -25,7 +23,9 @@ public class WebController {
     public String ratesTable(HttpServletRequest request, Model model){
 
         List<CountryRates> ratesList = StreamSupport
-                .stream(ratesService.getAllCountryRates().spliterator(), false).sorted(Comparator.comparing(CountryRates::getCountryName)).collect(Collectors.toList());
+                .stream(ratesService.getAllCountryRates().spliterator(), false)
+                .sorted(Comparator.comparing(CountryRates::getCountryName))
+                .collect(Collectors.toList());
 
         model.addAttribute("rates", ratesList);
 

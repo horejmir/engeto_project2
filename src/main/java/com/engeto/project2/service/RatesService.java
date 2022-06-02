@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -32,13 +31,15 @@ public class RatesService {
 
         if (rates != null) {
             List<CountryRates> ratesList = rates.getRatesList();
-            ratesList.sort(Comparator.comparing(CountryRates::getCountryName));
             countryRatesRepository.saveAll(ratesList);
         }
     }
 
     public Iterable<CountryRates> getAllCountryRates() {
-
         return countryRatesRepository.findAll();
+    }
+
+    public CountryRates geCountryRatesByShortcut(String shortcut) {
+        return countryRatesRepository.findByShortcut(shortcut);
     }
 }
