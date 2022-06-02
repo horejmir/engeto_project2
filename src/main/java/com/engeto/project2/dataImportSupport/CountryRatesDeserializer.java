@@ -1,4 +1,4 @@
-package com.engeto.project2.dataDownload;
+package com.engeto.project2.dataImportSupport;
 
 import com.engeto.project2.entity.CountryRates;
 import com.fasterxml.jackson.core.JsonParser;
@@ -36,8 +36,8 @@ public class CountryRatesDeserializer extends StdDeserializer<CountryRates> {
         countryRates.setCountryName(node.get("country").asText());
         countryRates.setStandardRate(convertToDouble(node.get("standard_rate").asText()));
         countryRates.setReducedRate(convertToDouble(node.get("reduced_rate").asText()));
-        countryRates.setReduceRateAlt(convertToDouble(node.get("reduced_rate_alt").asText()));
-        countryRates.setSuperReduceRate(convertToDouble(node.get("super_reduced_rate").asText()));
+        countryRates.setReducedRateAlt(convertToDouble(node.get("reduced_rate_alt").asText()));
+        countryRates.setSuperReducedRate(convertToDouble(node.get("super_reduced_rate").asText()));
         countryRates.setParkingRate(convertToDouble(node.get("parking_rate").asText()));
 
         return countryRates;

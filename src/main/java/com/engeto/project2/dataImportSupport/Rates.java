@@ -1,22 +1,29 @@
-package com.engeto.project2.dataDownload;
+package com.engeto.project2.dataImportSupport;
 
 import com.engeto.project2.entity.CountryRates;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Rates {
 
-    private List<CountryRates> ratesList;
+    private String disclaimer;
 
-    public void setRates(HashMap<String, CountryRates> rates) {
+    private HashMap<String, CountryRates> ratesMap;
 
-        for (Map.Entry<String, CountryRates> set : rates.entrySet()) {
+    public void setDisclaimer(String disclaimer) {
+        this.disclaimer = disclaimer;
+    }
+
+    public String getDisclaimer() {
+        return disclaimer;
+    }
+
+    public void setRates(HashMap<String, CountryRates> ratesMap) {
+
+        for (Map.Entry<String, CountryRates> set : ratesMap.entrySet()) {
             if (set.getValue().getShortcutEU() != null && !set.getValue().getShortcutEU().equals(set.getKey())) {
                 set.getValue().setShortcutISO(set.getKey());
             } else if (set.getValue().getShortcutISO() != null && !set.getValue().getShortcutISO().equals(set.getKey())) {
@@ -27,12 +34,15 @@ public class Rates {
             }
         }
 
-        List<CountryRates> countryRatesList = new ArrayList<>(rates.values());
-        this.ratesList = countryRatesList.stream().distinct().collect(Collectors.toList());
+        this.ratesMap = ratesMap;
     }
 
     public List<CountryRates> getRatesList() {
-        return ratesList;
+
+        return new ArrayList<>(ratesMap.values())
+                .stream()
+                .distinct()
+                .collect(Collectors.toList());
     }
 
 }

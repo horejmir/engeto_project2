@@ -1,6 +1,6 @@
 package com.engeto.project2.entity;
 
-import com.engeto.project2.dataDownload.CountryRatesDeserializer;
+import com.engeto.project2.dataImportSupport.CountryRatesDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import javax.persistence.*;
@@ -31,10 +31,10 @@ public class CountryRates {
     private Double reducedRate;
 
     @Column
-    private Double ReduceRateAlt;
+    private Double reducedRateAlt;
 
     @Column
-    private Double superReduceRate;
+    private Double superReducedRate;
 
     @Column
     private Double parkingRate;
@@ -48,8 +48,8 @@ public class CountryRates {
                 ", countryName='" + countryName + '\'' +
                 ", standardRate=" + standardRate +
                 ", reducedRate=" + reducedRate +
-                ", ReduceRateAlt=" + ReduceRateAlt +
-                ", superReduceRate=" + superReduceRate +
+                ", reducedRateAlt=" + reducedRateAlt +
+                ", superReducedRate=" + superReducedRate +
                 ", parkingRate=" + parkingRate +
                 '}';
     }
@@ -112,20 +112,20 @@ public class CountryRates {
         this.reducedRate = reducedRate;
     }
 
-    public Double getReduceRateAlt() {
-        return ReduceRateAlt;
+    public Double getReducedRateAlt() {
+        return reducedRateAlt;
     }
 
-    public void setReduceRateAlt(Double reduceRateAlt) {
-        ReduceRateAlt = reduceRateAlt;
+    public void setReducedRateAlt(Double reducedRateAlt) {
+        this.reducedRateAlt = reducedRateAlt;
     }
 
-    public Double getSuperReduceRate() {
-        return superReduceRate;
+    public Double getSuperReducedRate() {
+        return superReducedRate;
     }
 
-    public void setSuperReduceRate(Double superReduceRate) {
-        this.superReduceRate = superReduceRate;
+    public void setSuperReducedRate(Double superReducedRate) {
+        this.superReducedRate = superReducedRate;
     }
 
     public Double getParkingRate() {
