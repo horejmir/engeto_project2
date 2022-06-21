@@ -31,3 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
+/countries_highest_VAT.json
+/countries_lowest_VAT.json

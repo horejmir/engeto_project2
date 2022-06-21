@@ -1,29 +1,28 @@
-package com.engeto.project2.dataImportSupport;
+package com.engeto.project2.dataImport;
 
-import com.engeto.project2.entity.CountryRates;
+
+import com.engeto.project2.entity.Country;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Rates {
 
+    @JsonProperty("last_updated")
+    private LocalDate lastUpdated;
+
     private String disclaimer;
 
-    private HashMap<String, CountryRates> ratesMap;
+    @JsonProperty("rates")
+    private HashMap<String, Country> ratesMap;
 
-    public void setDisclaimer(String disclaimer) {
-        this.disclaimer = disclaimer;
-    }
+    public void setRatesMap(HashMap<String, Country> ratesMap) {
 
-    public String getDisclaimer() {
-        return disclaimer;
-    }
-
-    public void setRates(HashMap<String, CountryRates> ratesMap) {
-
-        for (Map.Entry<String, CountryRates> set : ratesMap.entrySet()) {
+        for (Map.Entry<String, Country> set : ratesMap.entrySet()) {
             if (set.getValue().getShortcutEU() != null && !set.getValue().getShortcutEU().equals(set.getKey())) {
                 set.getValue().setShortcutISO(set.getKey());
             } else if (set.getValue().getShortcutISO() != null && !set.getValue().getShortcutISO().equals(set.getKey())) {
@@ -37,12 +36,27 @@ public class Rates {
         this.ratesMap = ratesMap;
     }
 
-    public List<CountryRates> getRatesList() {
+    public LocalDate getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(LocalDate lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
+
+    public String getDisclaimer() {
+        return disclaimer;
+    }
+
+    public void setDisclaimer(String disclaimer) {
+        this.disclaimer = disclaimer;
+    }
+
+    public List<Country> getCountryList() {
 
         return new ArrayList<>(ratesMap.values())
                 .stream()
                 .distinct()
                 .collect(Collectors.toList());
     }
-
 }

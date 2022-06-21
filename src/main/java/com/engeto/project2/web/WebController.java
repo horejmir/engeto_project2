@@ -1,17 +1,17 @@
 package com.engeto.project2.web;
 
-import com.engeto.project2.entity.CountryRates;
+import com.engeto.project2.entity.Country;
 import com.engeto.project2.service.RatesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Controller
 public class WebController {
@@ -20,14 +20,44 @@ public class WebController {
     RatesService ratesService;
 
     @GetMapping("/")
-    public String ratesTable(HttpServletRequest request, Model model){
+    public String ratesTable(@RequestParam(required = false) String sort, Model model){
 
-        List<CountryRates> ratesList = StreamSupport
-                .stream(ratesService.getAllCountryRates().spliterator(), false)
-                .sorted(Comparator.comparing(CountryRates::getCountryName))
+        Function<Country, Comparable> sortByCountryAttribute = Country::getId;
+
+        if (sort != null) {
+                switch (sort) {
+                    case "name":
+                        sortByCountryAttribute = Country::getName;
+                        break;
+                    case "shortcutISO":
+                        sortByCountryAttribute = Country::getShortcutISO;
+                        break;
+                    case "standardRate":
+                        sortByCountryAttribute = Country::getStandardRate;
+                        break;
+                    case "reducedRate":
+                        sortByCountryAttribute = Country::getReducedRate;
+                        break;
+                    case "reducedRateAlt":
+                        sortByCountryAttribute = Country::getReducedRateAlt;
+                        break;
+                    case "superReducedRate":
+                        sortByCountryAttribute = Country::getSuperReducedRate;
+                        break;
+                    case "parkingRate":
+                        sortByCountryAttribute = Country::getParkingRate;
+                        break;
+                }
+        }
+
+        Comparator<Country> comparator = Comparator.comparing(sortByCountryAttribute, Comparator.nullsFirst(Comparator.naturalOrder()));
+
+        List<Country> countryList = ratesService.getAllCountry()
+                .stream()
+                .sorted(comparator)
                 .collect(Collectors.toList());
 
-        model.addAttribute("rates", ratesList);
+        model.addAttribute("countryList", countryList);
 
         return "ratesTable";
     }

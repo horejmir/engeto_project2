@@ -1,15 +1,11 @@
 package com.engeto.project2.entity;
 
-import com.engeto.project2.dataImportSupport.CountryRatesDeserializer;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "country_rates")
-@JsonDeserialize(using = CountryRatesDeserializer.class)
-public class CountryRates {
+@Table(name = "country")
+public class Country {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,7 +18,7 @@ public class CountryRates {
     private String shortcutEU;
 
     @Column
-    private String countryName;
+    private String name;
 
     @Column
     private Double standardRate;
@@ -41,11 +37,11 @@ public class CountryRates {
 
     @Override
     public String toString() {
-        return "CountryRates{" +
+        return "Country{" +
                 "id=" + id +
                 ", shortcutISO='" + shortcutISO + '\'' +
                 ", shortcutEU='" + shortcutEU + '\'' +
-                ", countryName='" + countryName + '\'' +
+                ", name='" + name + '\'' +
                 ", standardRate=" + standardRate +
                 ", reducedRate=" + reducedRate +
                 ", reducedRateAlt=" + reducedRateAlt +
@@ -58,13 +54,13 @@ public class CountryRates {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CountryRates that = (CountryRates) o;
-        return shortcutISO.equals(that.shortcutISO) && shortcutEU.equals(that.shortcutEU) && countryName.equals(that.countryName);
+        Country that = (Country) o;
+        return shortcutISO.equals(that.shortcutISO) && shortcutEU.equals(that.shortcutEU) && name.equals(that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(countryName);
+        return Objects.hash(name);
     }
 
 
@@ -88,12 +84,12 @@ public class CountryRates {
         this.shortcutEU = shortcutEU;
     }
 
-    public String getCountryName() {
-        return countryName;
+    public String getName() {
+        return name;
     }
 
-    public void setCountryName(String countryName) {
-        this.countryName = countryName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Double getStandardRate() {

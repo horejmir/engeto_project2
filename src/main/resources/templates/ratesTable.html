@@ -13,37 +13,35 @@
         <div class="card-body">
 
             <h3 class="text-center">VAT rates in EU</h3>
-
             <hr>
-
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th>country</th>
-                    <th>shortcut</th>
-                    <th>standard rate</th>
-                    <th>reduced rate</th>
-                    <th>reduced rate alt.</th>
-                    <th>super reduced rate</th>
-                    <th>parking rate</th>
+                    <th><a href="?sort=id" title="sort by ID">ID</a></th>
+                    <th><a href="?sort=name" title="sort by country name">country</a></th>
+                    <th><a href="?sort=shortcutISO" title="sort by ISO shortcut">shortcut</a></th>
+                    <th><a href="?sort=standardRate" title="sort by standard rate">standard rate</a></th>
+                    <th><a href="?sort=reducedRate" title="sort by reduce rate">reduced rate</a></th>
+                    <th><a href="?sort=reducedRateAlt" title="sort by reduce rate alt.">reduced rate alt.</a></th>
+                    <th><a href="?sort=superReducedRate" title="sort by super reduced rate">super reduced rate</a></th>
+                    <th><a href="?sort=parkingRate" title="sort by parking rate">parking rate</a></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="countryRates : ${rates}">
-                    <td><span th:text="${countryRates.countryName}"> Spain </span></td>
-                    <td><span th:text="${countryRates.shortcutISO} == ${countryRates.shortcutEU} ? ${countryRates.shortcutISO} : ${countryRates.shortcutISO} + ', ' + ${countryRates.shortcutEU}"> ES </span></td>
-                    <td><span th:text="${countryRates.standardRate} + ' %'"> 10 % </span></td>
-                    <td><span th:text="${countryRates.reducedRate} ? ${countryRates.reducedRate} + ' %' : '-'"> 10 % </span></td>
-                    <td><span th:text="${countryRates.reducedRateAlt} ? ${countryRates.reducedRateAlt} + ' %' : '-'"> 10 % </span></td>
-                    <td><span th:text="${countryRates.superReducedRate} ? ${countryRates.superReducedRate} + ' %' : '-'"> 10 % </span></td>
-                    <td><span th:text="${countryRates.parkingRate} ? ${countryRates.parkingRate} + ' %' : '-'"> 10 % </span></td>
-
+                <tr th:each="country : ${countryList}">
+                    <td><span th:text="${country.id}">1</span></td>
+                    <td><span th:text="${country.name}">Spain</span></td>
+                    <td><span th:text="${country.shortcutISO} == ${country.shortcutEU} ? ${country.shortcutISO} : ${country.shortcutISO} + ', ' + ${country.shortcutEU}">ES</span></td>
+                    <td><span th:text="${country.standardRate} + ' %'">10 %</span></td>
+                    <td><span th:text="${country.reducedRate} ? ${country.reducedRate} + ' %' : '-'">10 %</span></td>
+                    <td><span th:text="${country.reducedRateAlt} ? ${country.reducedRateAlt} + ' %' : '-'">10 %</span></td>
+                    <td><span th:text="${country.superReducedRate} ? ${country.superReducedRate} + ' %' : '-'">10 %</span></td>
+                    <td><span th:text="${country.parkingRate} ? ${country.parkingRate} + ' %' : '-'">10 %</span></td>
                 </tr>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
-
 </body>
 </html>
