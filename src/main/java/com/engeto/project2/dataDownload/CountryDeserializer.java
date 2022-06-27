@@ -1,4 +1,4 @@
-package com.engeto.project2.dataImport;
+package com.engeto.project2.dataDownload;
 
 import com.engeto.project2.entity.Country;
 import com.fasterxml.jackson.core.JsonParser;
@@ -10,13 +10,13 @@ import org.apache.commons.lang3.math.NumberUtils;
 
 import java.io.IOException;
 
-public class CountryImportDeserializer extends StdDeserializer<Country> {
+public class CountryDeserializer extends StdDeserializer<Country> {
 
-    public CountryImportDeserializer() {
+    public CountryDeserializer() {
         this(null);
     }
 
-    public CountryImportDeserializer(Class<?> vc) {
+    public CountryDeserializer(Class<?> vc) {
         super(vc);
     }
 

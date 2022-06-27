@@ -1,6 +1,6 @@
 package com.engeto.project2.service;
 
-import com.engeto.project2.dataImport.RatesImport;
+import com.engeto.project2.dataDownload.Downloader;
 import com.engeto.project2.entity.Country;
 import com.engeto.project2.repository.CountryRepository;
 import org.springframework.stereotype.Service;
@@ -11,19 +11,15 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
-public class RatesService {
+public class CountryService {
 
     private final CountryRepository countryRepository;
 
-    public RatesService(CountryRepository countryRepository ) {
+    public CountryService(CountryRepository countryRepository) {
         this.countryRepository = countryRepository;
 
-        RatesImport ratesImport = new RatesImport();
-        List<Country> countryList = ratesImport.getCountryList();
-
-        if (countryList != null) {
-            countryRepository.saveAll(countryList);
-        }
+        Downloader downloader =  new Downloader();
+        this.countryRepository.saveAll(downloader.getCountryList());
     }
 
     public List<Country> getAllCountry() {

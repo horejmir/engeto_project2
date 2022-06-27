@@ -1,7 +1,7 @@
 package com.engeto.project2;
 
 import com.engeto.project2.entity.Country;
-import com.engeto.project2.service.RatesService;
+import com.engeto.project2.service.CountryService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 public class CommandLineApp implements CommandLineRunner {
 
     @Autowired
-    RatesService ratesService;
+    CountryService countryService;
 
     @Autowired
     Environment environment;
@@ -34,7 +34,7 @@ public class CommandLineApp implements CommandLineRunner {
         int outputSize = 3;
         String port = environment.getProperty("local.server.port");
 
-        List<Country> allCountryList = ratesService.getAllCountry();
+        List<Country> allCountryList = countryService.getAllCountry();
 
         List<Country> lowestCountryList = allCountryList
                 .stream()
@@ -90,7 +90,7 @@ public class CommandLineApp implements CommandLineRunner {
                 if (input.equalsIgnoreCase("QUIT")) {
                     break;
                 }
-                System.out.println(ratesService.getCountryByShortcut(input.toUpperCase()).orElse(null));
+                System.out.println(countryService.getCountryByShortcut(input.toUpperCase()).orElse(null));
             }
 
         } catch (IOException e) {

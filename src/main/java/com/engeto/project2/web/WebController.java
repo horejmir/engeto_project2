@@ -1,7 +1,7 @@
 package com.engeto.project2.web;
 
 import com.engeto.project2.entity.Country;
-import com.engeto.project2.service.RatesService;
+import com.engeto.project2.service.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class WebController {
 
     @Autowired
-    RatesService ratesService;
+    CountryService countryService;
 
     @GetMapping("/")
     public String ratesTable(@RequestParam(required = false) String sort, Model model){
@@ -25,41 +25,28 @@ public class WebController {
         Function<Country, Comparable> sortByCountryAttribute = Country::getId;
 
         if (sort != null) {
-                switch (sort) {
-                    case "name":
-                        sortByCountryAttribute = Country::getName;
-                        break;
-                    case "shortcutISO":
-                        sortByCountryAttribute = Country::getShortcutISO;
-                        break;
-                    case "standardRate":
-                        sortByCountryAttribute = Country::getStandardRate;
-                        break;
-                    case "reducedRate":
-                        sortByCountryAttribute = Country::getReducedRate;
-                        break;
-                    case "reducedRateAlt":
-                        sortByCountryAttribute = Country::getReducedRateAlt;
-                        break;
-                    case "superReducedRate":
-                        sortByCountryAttribute = Country::getSuperReducedRate;
-                        break;
-                    case "parkingRate":
-                        sortByCountryAttribute = Country::getParkingRate;
-                        break;
-                }
+            switch (sort) {
+                case "name" -> sortByCountryAttribute = Country::getName;
+                case "shortcutISO" -> sortByCountryAttribute = Country::getShortcutISO;
+                case "standardRate" -> sortByCountryAttribute = Country::getStandardRate;
+                case "reducedRate" -> sortByCountryAttribute = Country::getReducedRate;
+                case "reducedRateAlt" -> sortByCountryAttribute = Country::getReducedRateAlt;
+                case "superReducedRate" -> sortByCountryAttribute = Country::getSuperReducedRate;
+                case "parkingRate" -> sortByCountryAttribute = Country::getParkingRate;
+            }
         }
 
-        Comparator<Country> comparator = Comparator.comparing(sortByCountryAttribute, Comparator.nullsFirst(Comparator.naturalOrder()));
+        Comparator<Country> comparator = Comparator
+                .comparing(sortByCountryAttribute, Comparator.nullsFirst(Comparator.naturalOrder()));
 
-        List<Country> countryList = ratesService.getAllCountry()
+        List<Country> countryList = countryService.getAllCountry()
                 .stream()
                 .sorted(comparator)
                 .collect(Collectors.toList());
 
         model.addAttribute("countryList", countryList);
 
-        return "ratesTable";
+        return "countryTable";
     }
 
 }

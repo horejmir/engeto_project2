@@ -1,7 +1,7 @@
 package com.engeto.project2.web;
 
 import com.engeto.project2.entity.Country;
-import com.engeto.project2.service.RatesService;
+import com.engeto.project2.service.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,27 +12,27 @@ import java.util.Optional;
 public class RestApiController {
 
     @Autowired
-    RatesService ratesService;
+    CountryService countryService;
 
     @GetMapping("/api/rates")
     public Iterable<Country> getAllCountry(){
-        return ratesService.getAllCountry();
+        return countryService.getAllCountry();
     }
 
     @GetMapping("/api/rates/shortcut/{shortcut}")
     public Optional<Country> getCountryByShortcut(@PathVariable String shortcut) {
-        return ratesService.getCountryByShortcut(shortcut.toUpperCase());
+        return countryService.getCountryByShortcut(shortcut.toUpperCase());
     }
 
     @GetMapping("/api/rates/{id}")
     public Optional<Country> getCountryById(@PathVariable Long id) {
-        return ratesService.getCountryById(id);
+        return countryService.getCountryById(id);
     }
 
     @PostMapping("/api/rates/")
     public Country saveCountry(@RequestBody Country country) {
 
-        ratesService.saveCountry(country);
+        countryService.saveCountry(country);
 
         return country;
     }
@@ -40,12 +40,12 @@ public class RestApiController {
     @PutMapping("/api/rates/{id}")
     public Country updateCountry(@RequestBody Country country, @PathVariable Long id) {
 
-        return ratesService.saveCountry(country);
+        return countryService.saveCountry(country);
     }
 
     @DeleteMapping("/api/rates/{id}")
     public void deleteCountry(@PathVariable Long id){
-        ratesService.deleteCountryById(id);
+        countryService.deleteCountryById(id);
     }
 
 }
